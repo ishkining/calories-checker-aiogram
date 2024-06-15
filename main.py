@@ -27,18 +27,18 @@ async def cmd_start(message: Message):
 # TEXT
 @dp.message()
 async def echo_handler(message: Message):
-    gramms = re.findall('([0-9]{1,5})г', message.text)
-    calories, protein, fat, carbs = (re.findall(f'([0-9]{{1,5}}){char}', message.text) for char in ['К', 'Б', 'Ж', 'У'])
+    gramms = re.findall('([0-9.]{1,5})г', message.text)
+    calories, protein, fat, carbs = (re.findall(f'([0-9.]{{1,5}}){char}', message.text) for char in ['К', 'Б', 'Ж', 'У'])
     
     print(gramms)
     print(calories)
     print(protein)
     result_text = f'''{message.text}\n
     Вывод:
-    {sum([int(x) * int(y) * 0.01 for x, y in zip(gramms, calories)])} кал
-    {sum([int(x) * int(y) * 0.01 for x, y in zip(gramms, protein)])} белков
-    {sum([int(x) * int(y) * 0.01 for x, y in zip(gramms, fat)])} жиров
-    {sum([int(x) * int(y) * 0.01 for x, y in zip(gramms, carbs)])} углеводов
+    {round(sum([float(x) * float(y) * 0.01 for x, y in zip(gramms, calories)]), 2)} кал
+    {round(sum([float(x) * float(y) * 0.01 for x, y in zip(gramms, protein)]), 2)} белков
+    {round(sum([float(x) * float(y) * 0.01 for x, y in zip(gramms, fat)]), 2)} жиров
+    {round(sum([float(x) * float(y) * 0.01 for x, y in zip(gramms, carbs)]), 2)} углеводов
     '''
 
     await message.answer(result_text)
