@@ -60,4 +60,14 @@ async def main():
 
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    if int(os.environ.get('DEBUG')):
+        try:
+            asyncio.run(main())
+        except Exception as ex:
+            logging.error(ex)
+    else:
+        while True:
+            try:
+                asyncio.run(main())
+            except Exception as ex:
+                logging.error(ex)
